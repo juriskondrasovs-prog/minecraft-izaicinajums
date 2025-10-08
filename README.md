@@ -1,0 +1,404 @@
+[index.html](https://github.com/user-attachments/files/22762926/index.html)
+<!DOCTYPE html>
+<html lang="lv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minecraft Izdzīvošanas Izaicinājums</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Courier New', monospace;
+            background: linear-gradient(135deg, #1e3a20 0%, #2d5016 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .container {
+            background: rgba(139, 90, 43, 0.95);
+            border: 8px solid #5c3a21;
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.7), inset 0 0 20px rgba(0, 0, 0, 0.3);
+            max-width: 700px;
+            width: 100%;
+            padding: 30px;
+            border-radius: 10px;
+        }
+        
+        h1 {
+            color: #ffff00;
+            text-align: center;
+            text-shadow: 3px 3px 0 #000;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            letter-spacing: 2px;
+        }
+        
+        .subtitle {
+            color: #aaffaa;
+            text-align: center;
+            margin-bottom: 25px;
+            font-size: 1.1em;
+        }
+        
+        .stats {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 25px;
+            background: rgba(0, 0, 0, 0.4);
+            padding: 15px;
+            border-radius: 5px;
+        }
+        
+        .stat {
+            text-align: center;
+            color: #fff;
+        }
+        
+        .stat-label {
+            font-size: 0.9em;
+            color: #aaa;
+        }
+        
+        .stat-value {
+            font-size: 1.8em;
+            font-weight: bold;
+            color: #ffcc00;
+        }
+        
+        .hearts {
+            color: #ff0000;
+            font-size: 1.5em;
+        }
+        
+        .question-box {
+            background: rgba(0, 0, 0, 0.5);
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border: 3px solid #000;
+        }
+        
+        .question {
+            color: #fff;
+            font-size: 1.3em;
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+        
+        .options {
+            display: grid;
+            gap: 12px;
+        }
+        
+        .option {
+            background: linear-gradient(135deg, #4a4a4a 0%, #2d2d2d 100%);
+            border: 3px solid #000;
+            padding: 15px;
+            cursor: pointer;
+            transition: all 0.3s;
+            color: #fff;
+            font-size: 1.1em;
+            border-radius: 5px;
+        }
+        
+        .option:hover {
+            background: linear-gradient(135deg, #5a5a5a 0%, #3d3d3d 100%);
+            transform: translateX(5px);
+            border-color: #ffcc00;
+        }
+        
+        .option.correct {
+            background: linear-gradient(135deg, #2d5016 0%, #1e3a20 100%);
+            border-color: #00ff00;
+            animation: pulse 0.5s;
+        }
+        
+        .option.wrong {
+            background: linear-gradient(135deg, #5a1616 0%, #3a1010 100%);
+            border-color: #ff0000;
+            animation: shake 0.5s;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
+        }
+        
+        .feedback {
+            margin-top: 15px;
+            padding: 15px;
+            border-radius: 5px;
+            font-size: 1.1em;
+            text-align: center;
+            font-weight: bold;
+        }
+        
+        .feedback.correct {
+            background: rgba(0, 255, 0, 0.2);
+            color: #00ff00;
+            border: 2px solid #00ff00;
+        }
+        
+        .feedback.wrong {
+            background: rgba(255, 0, 0, 0.2);
+            color: #ff6666;
+            border: 2px solid #ff0000;
+        }
+        
+        .next-btn {
+            background: linear-gradient(135deg, #5a8c2d 0%, #3d5e1f 100%);
+            color: #fff;
+            border: 3px solid #000;
+            padding: 15px 30px;
+            font-size: 1.2em;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 15px;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+        }
+        
+        .next-btn:hover {
+            background: linear-gradient(135deg, #6a9c3d 0%, #4d6e2f 100%);
+        }
+        
+        .final-score {
+            text-align: center;
+            color: #fff;
+            font-size: 1.5em;
+            line-height: 2;
+        }
+        
+        .restart-btn {
+            background: linear-gradient(135deg, #cc6600 0%, #994d00 100%);
+            color: #fff;
+            border: 3px solid #000;
+            padding: 15px 30px;
+            font-size: 1.2em;
+            cursor: pointer;
+            margin-top: 20px;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+        }
+        
+        .restart-btn:hover {
+            background: linear-gradient(135deg, #dd7700 0%, #aa5e00 100%);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>⛏️ MINECRAFT ⛏️</h1>
+        <div class="subtitle">Izdzīvošanas Izaicinājums</div>
+        
+        <div class="stats">
+            <div class="stat">
+                <div class="stat-label">Punkti</div>
+                <div class="stat-value" id="score">0</div>
+            </div>
+            <div class="stat">
+                <div class="stat-label">Dzīvības</div>
+                <div class="hearts" id="hearts">❤️❤️❤️</div>
+            </div>
+            <div class="stat">
+                <div class="stat-label">Jautājums</div>
+                <div class="stat-value"><span id="current">1</span>/10</div>
+            </div>
+        </div>
+        
+        <div id="quiz-container"></div>
+    </div>
+
+    <script>
+        const questions = [
+            {
+                question: "Kādu materiālu NEVAR sadedzināt krāsnī kā degvielu?",
+                options: ["Koka dēļi", "Ogles", "Akmeņi", "Lavas spaiņi"],
+                correct: 2,
+                explanation: "Akmeņus nevar izmantot kā degvielu! Bet lavas spaiņus var!"
+            },
+            {
+                question: "Cik dēļu vajag, lai izgatavotu vienu lādi?",
+                options: ["6 dēļus", "8 dēļus", "9 dēļus", "4 dēļus"],
+                correct: 1,
+                explanation: "Pareizi! Lādei vajag 8 dēļus - visas malas, izņemot vidū!"
+            },
+            {
+                question: "Kurā dimensijā Tu vari atrast Endermanus?",
+                options: ["Tikai Overworld", "Tikai The End", "Tikai Nether", "Visās dimensijās"],
+                correct: 3,
+                explanation: "Endermanus var sastapt visās trijās dimensijās!"
+            },
+            {
+                question: "Ko Tu iegūsti, uzspridzinot Creeper?",
+                options: ["Dimantu", "Pulveri", "TNT", "Nevienu resursu"],
+                correct: 1,
+                explanation: "Creepers nomet pulveri, ko var izmantot TNT izgatavošanai!"
+            },
+            {
+                question: "Kāds instruments ir visātrākais, lai raktu zemi un smiltis?",
+                options: ["Cirvis", "Lāpsta", "Izkapts", "Rokas"],
+                correct: 1,
+                explanation: "Lāpsta ir paredzēta tieši zemes un smilšu rakšanai!"
+            },
+            {
+                question: "Cik obsidiāna blokus vajag, lai izveidotu Nether portālu?",
+                options: ["14 blokus", "10 blokus", "12 blokus", "16 blokus"],
+                correct: 1,
+                explanation: "Vajag 10 blokus, ja neveido stūrus (vai 14 ar stūriem)!"
+            },
+            {
+                question: "Kuru no šiem resursiem NEVAR atrast raktuvē?",
+                options: ["Dimantu", "Smaragdu", "Zeltu", "Nāvējošo rūdu"],
+                correct: 3,
+                explanation: "Nāvējo rudi atrod tikai Nether dimensijā!"
+            },
+            {
+                question: "Ko ēd Minecraft cūkas?",
+                options: ["Kviešus", "Burkānus", "Ābolus", "Kadiķogas"],
+                correct: 1,
+                explanation: "Cūkas ēd burkānus, kartupelus un bietes!"
+            },
+            {
+                question: "Cik blokus Sponge spēj absorbēt?",
+                options: ["3 blokus", "5 blokus", "7 blokus", "10 blokus"],
+                correct: 2,
+                explanation: "Sūklis absorbē ūdeni līdz 7 blokiem katrā virzienā!"
+            },
+            {
+                question: "Kurš no šiem četriem mobiem ir visspēcīgākais Minecraftā?",
+                options: ["Creeper", "Wither", "Warden", "Ender Dragon"],
+                correct: 1,
+                explanation: "Wither ir viens no spēcīgākajiem mobiem - viņš var lidot un uzbrūkt ar eksplozīvām galvaskausiem!"
+            }
+        ];
+
+        let currentQuestion = 0;
+        let score = 0;
+        let lives = 3;
+        let answered = false;
+
+        function displayQuestion() {
+            const container = document.getElementById('quiz-container');
+            const q = questions[currentQuestion];
+            answered = false;
+            
+            document.getElementById('current').textContent = currentQuestion + 1;
+            
+            let html = '<div class="question-box">';
+            html += `<div class="question">${q.question}</div>`;
+            html += '<div class="options">';
+            
+            q.options.forEach((option, index) => {
+                html += `<div class="option" onclick="checkAnswer(${index})">${option}</div>`;
+            });
+            
+            html += '</div></div>';
+            container.innerHTML = html;
+        }
+
+        function checkAnswer(selected) {
+            if (answered) return;
+            answered = true;
+            
+            const q = questions[currentQuestion];
+            const options = document.querySelectorAll('.option');
+            const container = document.getElementById('quiz-container');
+            
+            options[selected].classList.add(selected === q.correct ? 'correct' : 'wrong');
+            options[q.correct].classList.add('correct');
+            
+            let feedbackHtml = '<div class="feedback ';
+            
+            if (selected === q.correct) {
+                score += 10;
+                feedbackHtml += 'correct">✓ Pareizi! ' + q.explanation;
+                document.getElementById('score').textContent = score;
+            } else {
+                lives--;
+                updateHearts();
+                feedbackHtml += 'wrong">✗ Nepareizi! ' + q.explanation;
+            }
+            
+            feedbackHtml += '</div>';
+            
+            if (lives > 0 && currentQuestion < questions.length - 1) {
+                feedbackHtml += '<button class="next-btn" onclick="nextQuestion()">Nākamais jautājums ➜</button>';
+            } else if (lives === 0 || currentQuestion === questions.length - 1) {
+                feedbackHtml += '<button class="next-btn" onclick="showFinal()">Redzēt rezultātu</button>';
+            }
+            
+            container.innerHTML += feedbackHtml;
+        }
+
+        function updateHearts() {
+            const heartsEl = document.getElementById('hearts');
+            heartsEl.innerHTML = '❤️'.repeat(lives) + '🖤'.repeat(3 - lives);
+        }
+
+        function nextQuestion() {
+            currentQuestion++;
+            if (currentQuestion < questions.length && lives > 0) {
+                displayQuestion();
+            } else {
+                showFinal();
+            }
+        }
+
+        function showFinal() {
+            const container = document.getElementById('quiz-container');
+            let message = '';
+            
+            if (lives === 0) {
+                message = '💀 Spēle beigusies! Tu zaudēji visas dzīvības!';
+            } else if (score === 100) {
+                message = '🏆 PERFEKTI! Tu esi īsts Minecraft meistars!';
+            } else if (score >= 70) {
+                message = '🌟 Lieliski! Tu zini Minecraft ļoti labi!';
+            } else if (score >= 50) {
+                message = '👍 Labi! Turpini spēlēt un mācīties!';
+            } else {
+                message = '📚 Turpini trenēties! Minecraft ir plaša pasaule!';
+            }
+            
+            container.innerHTML = `
+                <div class="question-box">
+                    <div class="final-score">
+                        ${message}<br>
+                        <span style="color: #ffcc00;">Tavs rezultāts: ${score}/100</span><br>
+                        <span style="font-size: 0.8em;">Atbildēti: ${currentQuestion + 1}/10 jautājumi</span>
+                    </div>
+                    <button class="restart-btn" onclick="restartQuiz()">🔄 Spēlēt vēlreiz</button>
+                </div>
+            `;
+        }
+
+        function restartQuiz() {
+            currentQuestion = 0;
+            score = 0;
+            lives = 3;
+            document.getElementById('score').textContent = '0';
+            updateHearts();
+            displayQuestion();
+        }
+
+        displayQuestion();
+    </script>
+</body>
+</html>
